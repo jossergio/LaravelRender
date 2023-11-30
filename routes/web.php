@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get ('/info', function () {
+    return phpinfo ();
+});
+
+Route::fallback (function () {
+    return "Função ainda não implementada";
+});
+
