@@ -21,6 +21,8 @@ Route::get ('/info', function () {
     return phpinfo ();
 });
 
+Route::view ("/ver", "ver");
+
 Route::fallback (function () {
     return "Função ainda não implementada";
 });
