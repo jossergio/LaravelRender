@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use Illuminate\Support\Facades\Redis;
 
+use Config;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,7 +28,13 @@ Route::get ('/info', function () {
 Route::view ("/ver", "ver");
 
 Route::get ("/redis/keys", function () {
-    return Redis::command ("keys", ["*"]);
+    // return Redis::command ("keys", ["*"]);
+    $registros = array ();
+    $prefixo = Config::get ("database.redis.options.prefix");
+    foreach (Redis::command ("keys", ["*"]) as $key) {
+        array_push ($registros, str_replace ($prefixo, "", $key));
+    }
+    return view ("redis_listar", ["registros" => $registros]);
 });
 
 Route::get ("/redis/get/{key}", function (string $key) {
